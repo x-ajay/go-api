@@ -1,5 +1,5 @@
-POSTGRES_IMAGE=postgres
-POSTGRES_CONTAINER=db
+POSTGRES_IMAGE=postgres:12
+POSTGRES_CONTAINER=postgresdb
 POSTGRES_USER=root
 POSTGRES_PASSWORD=secret
 POSTGRES_DB=bank
@@ -60,4 +60,8 @@ build:
 	@echo "building application"
 	go build -mod=vendor -o bin/main main.go
 
-PHONY: postgres postgres-clean createdb dropdb migrationup migrationdown sqlc test
+vendor:
+	@echo "running go mod vendor"
+	go mod vendor
+
+PHONY: postgres postgres-clean createdb dropdb migrationup migrationdown sqlc test run build vendor

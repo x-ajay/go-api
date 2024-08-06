@@ -7,4 +7,3 @@ sql:
       go:
         package: "db"
         out: "db/sqlc"
-        emit_db_tags: true

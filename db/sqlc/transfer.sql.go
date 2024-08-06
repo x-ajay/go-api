@@ -17,9 +17,9 @@ VALUES ($1, $2, $3) RETURNING id, from_account_id, to_account_id, amount, create
 `
 
 type CreateTransferParams struct {
-	FromAccountID int64 `db:"from_account_id"`
-	ToAccountID   int64 `db:"to_account_id"`
-	Amount        int32 `db:"amount"`
+	FromAccountID int64
+	ToAccountID   int64
+	Amount        int32
 }
 
 func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) (Transfer, error) {
@@ -64,10 +64,10 @@ OFFSET $4
 `
 
 type ListTransfersParams struct {
-	FromAccountID int64 `db:"from_account_id"`
-	ToAccountID   int64 `db:"to_account_id"`
-	Limit         int32 `db:"limit"`
-	Offset        int32 `db:"offset"`
+	FromAccountID int64
+	ToAccountID   int64
+	Limit         int32
+	Offset        int32
 }
 
 func (q *Queries) ListTransfers(ctx context.Context, arg ListTransfersParams) ([]Transfer, error) {

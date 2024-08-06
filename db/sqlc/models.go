@@ -54,26 +54,26 @@ func (ns NullCurrency) Value() (driver.Value, error) {
 }
 
 type Account struct {
-	ID        int64     `db:"id"`
-	Owner     string    `db:"owner"`
-	Balance   int32     `db:"balance"`
-	Currency  Currency  `db:"currency"`
-	CreatedAt time.Time `db:"created_at"`
+	ID        int64
+	Owner     string
+	Balance   int32
+	Currency  Currency
+	CreatedAt time.Time
 }
 
 type Entry struct {
-	ID        int64 `db:"id"`
-	AccountID int64 `db:"account_id"`
+	ID        int64
+	AccountID int64
 	// can be negative or positive
-	Amount    int32     `db:"amount"`
-	CreatedAt time.Time `db:"created_at"`
+	Amount    int32
+	CreatedAt time.Time
 }
 
 type Transfer struct {
-	ID            int64 `db:"id"`
-	FromAccountID int64 `db:"from_account_id"`
-	ToAccountID   int64 `db:"to_account_id"`
+	ID            int64
+	FromAccountID int64
+	ToAccountID   int64
 	// must be positive
-	Amount    int32     `db:"amount"`
-	CreatedAt time.Time `db:"created_at"`
+	Amount    int32
+	CreatedAt time.Time
 }
