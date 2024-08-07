@@ -60,7 +60,7 @@ build:
 	@echo "building application"
 	go build -mod=vendor -o bin/main main.go
 
-vendor:
+install:
 	@echo "running go mod vendor"
 	go mod vendor
 

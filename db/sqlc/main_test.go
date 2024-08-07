@@ -6,20 +6,20 @@ import (
 	"testing"
 
 	_ "github.com/lib/pq"
+
+	utilsconfig "github.com/x-ajay/go-api/utils/config"
 )
 
 var testQueries *Queries
 var testDB *sql.DB
 
-var (
-	dbDriver = "postgres"
-	dbSource = "postgresql://root:secret@localhost:5432/bank?sslmode=disable"
-)
-
 func TestMain(m *testing.M) {
-	var err error
+	config, err := utilsconfig.LoadConfig("../../")
+	if err != nil {
+		panic(err)
+	}
 
-	testDB, err = sql.Open(dbDriver, dbSource)
+	testDB, err = sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		panic(err)
 	}
