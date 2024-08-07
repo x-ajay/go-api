@@ -64,4 +64,8 @@ install:
 	@echo "running go mod vendor"
 	go mod vendor
 
-PHONY: postgres postgres-clean createdb dropdb migrationup migrationdown sqlc test run build vendor
+generate:
+	@echo "running go generate"
+	go generate ./...
+
+PHONY: postgres postgres-clean createdb dropdb migrationup migrationdown sqlc test run build vendor generate
