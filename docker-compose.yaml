@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:12-alpine
+    container_name: postgresdb
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: bank
+    ports:
+        - "5432:5432"
+
+  backend:
+    build: .
+    container_name: go-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_DRIVER: postgres
+      DB_SOURCE: postgres://root:secret@localhost:5432/bank?sslmode=disable
+      HTTP_ADDRESS: :8080
+

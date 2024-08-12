@@ -1,32 +1,40 @@
 package main
 
-import (
-	"database/sql"
-	"log"
+import "sort"
 
-	_ "github.com/lib/pq"
-
-	"github.com/x-ajay/go-api/api"
-	db "github.com/x-ajay/go-api/db/sqlc"
-	utilsconfig "github.com/x-ajay/go-api/utils/config"
-)
-
-func main() {
-	config, err := utilsconfig.LoadConfig(".")
-	if err != nil {
-		log.Fatal("cannot load config:", err)
-	}
-
-	conn, err := sql.Open(config.DBDriver, config.DBDriver)
-	if err != nil {
-		log.Fatal("cannot connect to db:", err)
-	}
-
-	store := db.NewStore(conn)
-	server := api.SetupServer(store)
-
-	if err = server.Start(config.HTTPAddress); err != nil {
-		log.Fatal("cannot start server:", err)
-	}
-
+type KthLargest struct {
+	Nums []int
+	K    int
 }
+
+func Constructor(k int, nums []int) KthLargest {
+	sort.Ints(nums)
+	return KthLargest{
+		K:    k,
+		Nums: nums,
+	}
+}
+
+func (this *KthLargest) Add(val int) int {
+	found := false
+	for i := 0; i < len(this.Nums); i++ {
+		if this.Nums[i] > val {
+			found = true
+			this.Nums = append(this.Nums[:i], append([]int{val}, this.Nums[i:]...)...)
+			break
+		}
+	}
+	if !found {
+		this.Nums = append(this.Nums, val)
+	}
+	if len(this.Nums) < this.K {
+		return 0
+	}
+	return this.Nums[len(this.Nums)-this.K]
+}
+
+/**
+ * Your KthLargest object will be instantiated and called as such:
+ * obj := Constructor(k, nums);
+ * param_1 := obj.Add(val);
+ */

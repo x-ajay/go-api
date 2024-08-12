@@ -13,6 +13,7 @@ postgres:
 	docker run --name $(POSTGRES_CONTAINER) -p $(POSTGRES_PORT):5432 -e POSTGRES_USER=$(POSTGRES_USER) -e POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) -e POSTGRES_DB=$(POSTGRES_DB) -d $(POSTGRES_IMAGE)
 	@echo "postgres running."
 
+
 postgres-clean:
 	@echo "stopping postgres using docker"
 	docker stop $(POSTGRES_CONTAINER)
@@ -67,5 +68,13 @@ install:
 generate:
 	@echo "running go generate"
 	go generate ./...
+
+docker-build:
+	@echo "building docker image"
+	docker build -t go-api:latest .
+
+docker-run:
+	@echo "running docker container"
+	docker run --name go-api -p 8080:8080 -e GIN_MODE=release go-api:latest
 
 PHONY: postgres postgres-clean createdb dropdb migrationup migrationdown sqlc test run build vendor generate
